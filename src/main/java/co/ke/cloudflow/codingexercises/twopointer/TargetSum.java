@@ -9,9 +9,9 @@ public class TargetSum {
         // [1, 2, 3, 4, 6], target=6
         // Output: [1, 3] and [2, 4]
 
-        int[] result = search(new int[] { 1, 2, 3, 4, 6 }, 6);
+        int[] result = searchWithHashTable(new int[] { 1, 2, 3, 4, 6 }, 6);
         System.out.println("[" + result[0] + ", " + result[1] + "]");
-        result = search(new int[] { 2, 5, 9, 11}, 11);
+        result = searchWithHashTable(new int[] { 2, 5, 9, 11}, 11);
         System.out.println("[" + result[0] + ", " + result[1] + "]");
     }
 
@@ -47,12 +47,13 @@ public class TargetSum {
         Map<Integer, Integer> hashTable = new HashMap<>();
 
         for (int i = 0; i < input.length; i++) {
-            hashTable.put(input[i], i);
-        }
-
-        for (int i = 0; i < input.length; i++) {
             int complement = targetSum - input[i];
-            if (hashTable.containsKey(complement))
+            if (hashTable.containsKey(complement)) {
+                return new int[] {hashTable.get(complement), i};
+            } else {
+                hashTable.put(input[i], i);
+            }
         }
+        return new int[] {-1, -1};
     }
 }
